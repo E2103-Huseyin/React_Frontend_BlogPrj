@@ -1,6 +1,7 @@
 import React, {useEffect,useState} from 'react';
 import axios from "axios"; //https://github.com/axios/axios
-import Card from "../Card/index"
+import Card from "../Card/index";
+import Box from '@material-ui/core/Box';
 
 const baseurl = "https://blog6666.herokuapp.com";
 
@@ -21,15 +22,16 @@ const Cardlist = () => {
 
     return (
         <div>
+            <Box display="flex" justifyContent="center"  flexWrap="wrap" m={1} p={1}>
             
 
-            {blogList?.map(data =>{
-                return <Card  props={data} /> 
-            
-            
-            })}
+                {blogList?.map(data =>{
+                    return <Card  props={data} /> 
+                
+                
+                })}
 
-            
+            </Box>
 
             
         </div>
