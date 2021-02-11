@@ -17,6 +17,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import SpaIcon from '@material-ui/icons/Spa';
 import Button from '@material-ui/core/Button';
 import {Link } from "react-router-dom";
+import {history} from "react-router-dom"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -208,7 +209,7 @@ export default function PrimarySearchAppBar() {
 		  <div className={classes.grow} />
 		  
 		  <div className={classes.sectionDesktop}>
-            <Button href="#text-buttons" color="inherit">
+            <Button href="http://localhost:3000/auth/login" color="inherit" >
                 Sign In
             </Button>
             <Button href="#text-buttons" color="inherit">

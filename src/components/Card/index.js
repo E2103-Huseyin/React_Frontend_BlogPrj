@@ -104,8 +104,6 @@ export default function RecipeReviewCard({props}) {
           <ShareIcon />
         </IconButton>
 
-        {/* Iconbar like={props.like_count} view={props.view_count} comment={props.comment_count} */} 
-        {/* <Iconbar data={props} />   */}
         
         
 
