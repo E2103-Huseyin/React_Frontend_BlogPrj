@@ -11,7 +11,7 @@ const Detail = () => {
     console.log("slug:",slug)
     const [blogDetail, setBlogDetail] = useState(null)
     useEffect(() => {
-        axios.get(postDetailBaseUrl+slug)?.then((res)=>console.log("detail:",res?.data))
+        axios.get(postDetailBaseUrl+slug+"/")?.then((res)=>console.log("detail:",res?.data))
         
         
     }, []) 
@@ -19,7 +19,7 @@ const Detail = () => {
     return (
         
         <div>
-            <PrimarySearchAppBar/>
+            
             <h1>detail page</h1>
         </div>
     )

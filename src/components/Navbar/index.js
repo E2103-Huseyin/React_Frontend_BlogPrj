@@ -14,8 +14,10 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-
+import SpaIcon from '@material-ui/icons/Spa';
 import Button from '@material-ui/core/Button';
+import {Link } from "react-router-dom";
+
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -172,16 +174,18 @@ export default function PrimarySearchAppBar() {
 			className={classes.menuButton}
 			color="inherit"
 			aria-label="open drawer"
+			href="http://localhost:3000/"
 		  >
-			<MenuIcon />
+			<SpaIcon />
 		  </IconButton>
-		  <Typography className={classes.title} variant="h6" noWrap>
+		  <Typography className={classes.title} variant="h6" noWrap >
 			BLOG
 		  </Typography>
 
           <div className={classes.sectionDesktop}>
-            <Button href="#text-buttons" color="inherit">
-                Post List
+            <Button href="http://localhost:3000/" color="inherit">
+				Post List 
+				{/* <Link to="/">Post List </Link> */}
             </Button>
             <Button href="#text-buttons" color="inherit">
                 Post Create

@@ -19,7 +19,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
-import { height } from '@material-ui/system';
+
+import {useHistory} from "react-router-dom"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RecipeReviewCard({props}) {
     // const like = {props.like_count}
-
+    const history = useHistory();
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
 
@@ -63,10 +64,13 @@ export default function RecipeReviewCard({props}) {
     <Card className={classes.root}  >
     
       <button>
+        <div onClick={()=>history.push(`/detail/${props.slug}`)}>
+
+        
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            R
+            {props.blogger.slice(0,1).toUpperCase()}
           </Avatar>
         }
         action={
@@ -74,8 +78,9 @@ export default function RecipeReviewCard({props}) {
             <MoreVertIcon />
           </IconButton>
         }
-        title={props.title}
-        subheader={props.publish_time}
+        title={props.title.toUpperCase()}
+        subheader={props.blogger.toUpperCase()+" posted in "+props.publish_time}
+        
       />
       <CardMedia
         className={classes.media}
@@ -85,12 +90,12 @@ export default function RecipeReviewCard({props}) {
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p" >
             
-            {props.content} 
+            {props.content.slice(0,200)+"..."} 
             
             
         </Typography>
       </CardContent>
-
+      </div>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
