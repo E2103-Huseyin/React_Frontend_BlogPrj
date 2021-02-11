@@ -8,7 +8,7 @@ const baseurl = "https://blog6666.herokuapp.com";
 const Cardlist = () => {
     const [blogList, setBlogList] = useState(null)
     useEffect(() => {
-        axios.get(baseurl)?.then((res)=>setBlogList(res.data))
+        axios.get(baseurl)?.then((res)=>setBlogList(res?.data))
         
     }, [])   // içi boşsa component did mount
     
