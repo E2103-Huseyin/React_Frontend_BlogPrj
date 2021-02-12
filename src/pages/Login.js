@@ -2,6 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '../components/Auth/Grid';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,15 +33,29 @@ const Login = () => {
 
     return (
         <div>
-            <h1>LOGIN PAGE</h1>
+            
 
             <div style={{ width: '100%' }}>
                 <Box display="flex" justifyContent="center" flexWrap="wrap"  m={1} p={1} bgcolor="black">
-                   
+                    
                     <Box p={1}  bgcolor="#fff" display="flex" alignItems="center">
                         
                         <Box >
+                            <h1 style={{ color: '#A1C0C1' }}>LOGIN PAGE</h1>
                             <Grid/>
+                            <div style={{
+                                border: '1px solid black',
+                                marginTop:"30px",
+                                padding:"15px",
+                                backgroundColor:"black"
+                            }}>
+                            <h1 style={{ color: 'red' }}>Henüz Üye Değil Misiniz?</h1>
+                            <p style={{ color: 'white' }}>Üyelerimize özel hizmetlerimizden faydalanabilmek için üye olun.</p>
+                            <Button variant="outlined" color="primary" href="#outlined-buttons">
+                                Hemen Üye Ol
+                            </Button>
+                            </div>
+
                         </Box>
                         
                     </Box>

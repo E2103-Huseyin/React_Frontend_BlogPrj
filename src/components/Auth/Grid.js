@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -37,6 +38,8 @@ export default function InputWithIcon() {
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
+  
+
 
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
@@ -46,77 +49,107 @@ export default function InputWithIcon() {
     event.preventDefault();
   };
 
+  const [username, setUsername] = useState("")
+  const [email, setEmail] = useState("")
+//   const [password, setPassword] = useState("")
+   const [err, setErr] = useState()
+//   const handleChange =(res) =>{
+//     setUsername(res)
+//   }
+
+  console.log("username:", username);
+  console.log("email:", email);
+//   console.log("password:", password);
+  console.log("err:", err);
+  console.log("values:", values.password);
+  const password = values.password
+  console.log("password:", password);
+  const handleSubmit = async () => {
+    axios.post(`https://blog6666.herokuapp.com/auth/login/`, { username ,email, password })
+      .then(response => {
+        console.log("res", response);
+        console.log("res.data", response.data);
+    }).catch(({response:{data}}) => console.log("setErr", {data}))
+    // catch(({response:{data}}) => setErr({data}))
+    
+    }
+  
+      
   return (
     <div>
-      <FormControl className={classes.margin}>
-        <InputLabel htmlFor="input-with-icon-adornment">User Name</InputLabel>
-        <Input
-          id="input-with-icon-adornment"
-          startAdornment={
-            <InputAdornment position="start">
-              <AccountCircle />
-            </InputAdornment>
-          }
-        />
-      </FormControl>
-      <TextField
-        className={classes.margin}
-        id="input-with-icon-textfield"
-        label="Email"
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <AlternateEmailIcon />
-            </InputAdornment>
-          ),
-        }}
-      />
-      <div className={classes.margin}>
-        {/* <Grid container spacing={1} alignItems="flex-end">
-          <Grid item>
-            <VpnKeyIcon />
-          </Grid>
-          <Grid item>
-            <TextField id="input-with-icon-grid" label="With a grid" />
-          </Grid>
-        </Grid> */}
-
-        <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-password"
-            type={values.showPassword ? 'text' : 'password'}
-            value={values.password}
-            onChange={handleChange('password')}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            }
-            labelWidth={70}
-          />
-
+        <form > 
+            <FormControl className={classes.margin} >
+                <InputLabel htmlFor="input-with-icon-adornment">User Name</InputLabel>
+                <Input
+                    id="input-with-icon-adornment"
+                    onChange={(e)=>setUsername(e.target.value)}
+                    startAdornment={
+                    <InputAdornment position="start">
+                    <AccountCircle />
+                    </InputAdornment>
+                    }
+                />
+            </FormControl>
+            <TextField        
+                className={classes.margin}
+                id="input-with-icon-textfield"
+                label="Email"
+                onChange={(e)=>setEmail(e.target.value)}
+                InputProps={{
+                startAdornment: (
+                    <InputAdornment position="start">
+                    <AlternateEmailIcon />
+                    </InputAdornment>
+                ),
+                }}
+            />
             
-        </FormControl>
         
+                <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
+                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                    <OutlinedInput
+                        // OutlinedInput
+                        id="outlined-adornment-password"
+                        type={values.showPassword ? 'text' : 'password'}
+                        value={values.password}
+                        onChange={handleChange('password')}
+                        // onChange={(e)=>setPassword(e.target.value)}
+                        
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                                >
+                                {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                        labelWidth={70}
+                    />
+
+                    
+                </FormControl>
+        
+                
+            <div className={classes.margin}>
+
+            </div>
+
             <Button
                 variant="contained"
                 color="primary"
                 className={classes.button}
                 style={{marginTop:"20px",marginLeft:"20px"}}
+                onClick={handleSubmit}
             >
                 Sign in <LockOpenIcon/>
             </Button>
-        
 
-      </div>
+
+        </form>
     </div>
   );
 }
