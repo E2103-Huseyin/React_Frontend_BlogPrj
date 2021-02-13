@@ -1,6 +1,5 @@
 import React, {useEffect,useState} from 'react';
 import axios from "axios";
-import PrimarySearchAppBar from "../components/Navbar/index";
 import { useParams } from "react-router-dom"
 
 
@@ -21,7 +20,7 @@ const Detail = () => {
            headers : {
             Accept: "application/json",
             "Content-Type": "application/json",
-            Authorization : {usertoken},
+            Authorization : "Token "+localStorage.getItem('Authorization'),
 
            }
         })

@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
+import {useHistory} from "react-router-dom"
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -88,7 +90,8 @@ export default function PrimarySearchAppBar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
+  const [message, setMessage] = useState("hello")
+  const history = useHistory()
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -104,6 +107,18 @@ export default function PrimarySearchAppBar() {
 	setAnchorEl(null);
 	handleMobileMenuClose();
   };
+
+  const handleMenuLogout = () => {
+    axios.post(`https://blog6666.herokuapp.com/auth/logout/`)
+      .then(response => {
+		localStorage.setItem("Authorization", "notoken");
+        console.log("Logout_message:",response )
+        history.push("/")
+        document.location.reload()
+    }).catch(({response:{data}}) => setMessage({data}))
+    
+    }
+	console.log("error_message:",message )
 
   const handleMobileMenuOpen = (event) => {
 	setMobileMoreAnchorEl(event.currentTarget);
@@ -122,6 +137,7 @@ export default function PrimarySearchAppBar() {
 	>
 	  <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
 	  <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+	  <MenuItem onClick={handleMenuLogout}>Logout</MenuItem>
 	</Menu>
   );
 
