@@ -1,22 +1,21 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import {useHistory} from "react-router-dom"
 import { makeStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import clsx from 'clsx';
 import IconButton from '@material-ui/core/IconButton';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
-import Icon from '@material-ui/core/Icon';
+// import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function InputWithIcon() {
+  const history = useHistory()
   const classes = useStyles();
   const [values, setValues] = React.useState({
     amount: '',
@@ -67,11 +67,11 @@ export default function InputWithIcon() {
   const handleSubmit = async () => {
     axios.post(`https://blog6666.herokuapp.com/auth/login/`, { username ,email, password })
       .then(response => {
-        console.log("res", response);
-        console.log("res.data", response.data);
-    }).catch(({response:{data}}) => console.log("setErr", {data}))
+        localStorage.setItem("Authorization", response.data.key);
+        history.push("/")
+        document.location.reload()
+    }).catch(({response:{data}}) => setErr({data}))
     // catch(({response:{data}}) => setErr({data}))
-    
     }
   
       

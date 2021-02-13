@@ -1,5 +1,4 @@
 import React from 'react'
-import App from "./App"
 import Detail from "./pages/Detail"
 import Login from "./pages/Login"
 import Mainpage from "./pages/Mainpage"
