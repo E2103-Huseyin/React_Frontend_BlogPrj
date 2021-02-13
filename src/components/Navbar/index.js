@@ -78,12 +78,16 @@ const useStyles = makeStyles((theme) => ({
 	  display: 'flex',
 	},
   },
-  sectionMobile: {
+  
+    sectionMobile: {
+	
 	display: 'flex',
 	[theme.breakpoints.up('md')]: {
 	  display: 'none',
 	},
   },
+
+    
 }));
 
 export default function PrimarySearchAppBar() {
@@ -111,7 +115,7 @@ export default function PrimarySearchAppBar() {
   const handleMenuLogout = () => {
     axios.post(`https://blog6666.herokuapp.com/auth/logout/`)
       .then(response => {
-		localStorage.setItem("Authorization", "notoken");
+		localStorage.setItem("Authorization", "");
         console.log("Logout_message:",response )
         history.push("/")
         document.location.reload()
@@ -119,8 +123,8 @@ export default function PrimarySearchAppBar() {
     
     }
 	console.log("error_message:",message )
-
-  const handleMobileMenuOpen = (event) => {
+	
+  	const handleMobileMenuOpen = (event) => {
 	setMobileMoreAnchorEl(event.currentTarget);
   };
 
@@ -181,7 +185,7 @@ export default function PrimarySearchAppBar() {
 	  </MenuItem>
 	</Menu>
   );
-
+  const x = localStorage.getItem('Authorization')? "visible"  :"none";
   return (
 	<div className={classes.grow}>
 	  <AppBar position="static">
@@ -253,6 +257,8 @@ export default function PrimarySearchAppBar() {
 			  aria-haspopup="true"
 			  onClick={handleProfileMenuOpen}
 			  color="inherit"
+			  className={classes.userAvatar}
+			  style = {{display: x }}
 			>
 			  <AccountCircle />
 			</IconButton>
