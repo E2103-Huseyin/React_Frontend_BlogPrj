@@ -51,25 +51,30 @@ export default function InputWithIcon() {
 
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
-//   const [password, setPassword] = useState("")
-   const [err, setErr] = useState()
+  const [err, setErr] = useState()
 //   const handleChange =(res) =>{
 //     setUsername(res)
 //   }
 
   console.log("username:", username);
   console.log("email:", email);
-//   console.log("password:", password);
   console.log("err:", err);
-  console.log("values:", values.password);
+  
   const password = values.password
-  console.log("password:", password);
+  
+  console.log("localusername:", localStorage.getItem('Localusername'));
+  console.log("Authorization:", localStorage.getItem('Authorization'));
+
+  
   const handleSubmit = async () => {
     axios.post(`https://blog6666.herokuapp.com/auth/login/`, { username ,email, password })
       .then(response => {
         localStorage.setItem("Authorization", response.data.key);
+        localStorage.setItem("Localusername", username);
+         
         history.push("/")
         document.location.reload()
+        
     }).catch(({response:{data}}) => setErr({data}))
     // catch(({response:{data}}) => setErr({data}))
     }

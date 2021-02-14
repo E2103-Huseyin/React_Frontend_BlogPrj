@@ -19,7 +19,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import SpaIcon from '@material-ui/icons/Spa';
 import Button from '@material-ui/core/Button';
 // import {Link } from "react-router-dom";
-// import {history} from "react-router-dom"
+import {history} from "react-router-dom"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -112,10 +112,18 @@ export default function PrimarySearchAppBar() {
 	handleMobileMenuClose();
   };
 
+  const handleMenuProfile = () => {
+		// axios.get(baseurl)?.then((res)=>setBlogList(res?.data))
+		const username = localStorage.getItem("Localusername");	
+		history.push(`/user/profile/${username}/`)
+		document.location.reload()
+  	};
+
   const handleMenuLogout = () => {
     axios.post(`https://blog6666.herokuapp.com/auth/logout/`)
       .then(response => {
 		localStorage.setItem("Authorization", "");
+		// localStorage.removeItem()
         console.log("Logout_message:",response )
         history.push("/")
         document.location.reload()
@@ -137,9 +145,9 @@ export default function PrimarySearchAppBar() {
 	  keepMounted
 	  transformOrigin={{ vertical: 'top', horizontal: 'right' }}
 	  open={isMenuOpen}
-	  onClose={handleMenuClose}
+	//   onClose={handleMenuClose}
 	>
-	  <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+	  <MenuItem onClick={handleMenuProfile}>Profile</MenuItem>
 	  <MenuItem onClick={handleMenuClose}>My account</MenuItem>
 	  <MenuItem onClick={handleMenuLogout}>Logout</MenuItem>
 	</Menu>
@@ -186,6 +194,7 @@ export default function PrimarySearchAppBar() {
 	</Menu>
   );
   const x = localStorage.getItem('Authorization')? "visible"  :"none";
+  
   return (
 	<div className={classes.grow}>
 	  <AppBar position="static">
