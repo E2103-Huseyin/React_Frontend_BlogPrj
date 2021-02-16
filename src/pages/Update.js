@@ -1,5 +1,5 @@
 import React, {useEffect,useState} from 'react';
-import { useFormik } from "formik";
+
 import axios from "axios";
 import {useHistory} from "react-router-dom"
 import { useParams } from "react-router-dom"
@@ -7,24 +7,36 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-
+// import Alert from '@material-ui/lab/Alert';
+// import { useAlert } from 'react-alert'
+ 
 
 const useStyles = makeStyles((theme) => ({
-    root: {
+    root1: {
       '& .MuiTextField-root': {
         margin: theme.spacing(1),
         width: '25ch',
       },
     },
+    root: {
+        width: '100%',
+        '& > * + *': {
+          marginTop: theme.spacing(2),
+        },
+    },
+
+
     
 }));
 
 
 export const Update = () => {
+    // const alert = useAlert()
+    const { slug } = useParams();
     const classes = useStyles();
     const postUpdateBaseUrl = "https://blog6666.herokuapp.com/update/"
+    const DetailUrl = "/detail/"+slug;
     const history = useHistory();
-    const { slug } = useParams();
 
     const [updatedata, setUpdatedata] = useState(
         {   
@@ -45,11 +57,10 @@ export const Update = () => {
 
 
 
-    const [newdata, setNewdata] = useState(updatedata);
+    
     
     
     console.log("updatedata :",updatedata) ;
-    console.log("newdata :",newdata) ;
     
     
 
@@ -65,59 +76,15 @@ export const Update = () => {
         })
         .then( (res)=>setUpdatedata(res.data) )
            
-        // setUpdatedata(res.data) )
-        // .then( ()=>setNewdata(updatedata) )
+        
              
     }, []) 
 
      
     
 
-    // const formik = useFormik({
-
-    //     initialValues,
-
-    //     initialValues: {
-    //         title: updatedata.title ,
-    //         category: updatedata.category,
-    //         image: updatedata.image,
-    //         content: updatedata.content,
-
-    //     //     // "title": updatedata.title ,
-    //     //     // "category": updatedata.category,
-    //     //     // "image": updatedata.image,
-    //     //     // "content": updatedata.content  
-    //     // },
-        
-    //     onSubmit: async (values) => {
-    //       console.log("values", values);
-    //       try {
-    //         const result = await axios.put(
-    //             (postUpdateBaseUrl+slug+"/"),
-    //           values,
-    //           {
-    //             headers: {
-    //               Accept: "application/json",
-    //               "Content-Type": "application/json",
-    //               Authorization : "Token "+localStorage.getItem('Authorization'),
-    //             },
-    //           }
-    //         );
-    //         console.log(result?.data);
-    //       } catch ({ response }) {
-    //         if (response) {
-    //         //   console.log(response.data.non_field_errors[0]);
-    //           console.log("catch:",response.data);
-    //         } else {
-    //           console.log("Something went wrong!");
-    //         }
-    //       }
-    //     },
-    // });
-    
-    
     const handleMenuUpdate = () => {
-      
+            
             // PUT request using fetch inside useEffect React hook
             const requestOptions = {
                 method: 'PUT',
@@ -138,21 +105,15 @@ export const Update = () => {
             fetch( (postUpdateBaseUrl+slug+"/"), requestOptions)
                 .then(response => response.json())
                 .then(data => console.log("response_data:",data));
-                // .then(data => setPostId(data.id));
+                history.push(DetailUrl)
+                // alert.show('Oh look, an alert!')
+                // document.location.reload()
         
         // empty dependency array means this effect will only run once (like componentDidMount in classes)
         
 
 		
   	};
-
-
-  
-    
-    const title = (updatedata?.title) ;
-
-    console.log("title:",{title}.title)
-    
 
     
 
@@ -161,7 +122,7 @@ export const Update = () => {
            
             <h1>UPDATE PAGE</h1>
 
-            <form className={classes.root} noValidate autoComplete="off"  >
+            <form className={classes.root1} noValidate autoComplete="off"  >
                 <div>
                     <TextField
                         id="standard-multiline-flexible"
@@ -172,7 +133,6 @@ export const Update = () => {
                         rowsMax={2}
                         value={updatedata.title }
                         onChange={handleChange}
-                        // onChange={(event)=>setUpdatedata({ "title": event.target.value})}
                         variant="outlined"
                         
                     />
@@ -184,7 +144,6 @@ export const Update = () => {
                         rowsMax={1}
                         value={updatedata.image}
                         onChange={handleChange}
-                        // onChange={(event)=>setUpdatedata({ "image": event.target.value})}
                         variant="outlined"
                         // variant="filled"
                         type="text"
@@ -194,12 +153,10 @@ export const Update = () => {
                         label="Category"
                         name="category"
                         multiline
-                        
                         rowsMax={1}
                         value={updatedata.category}
                         variant="outlined"
                         onChange={handleChange}
-                        // onChange={(event)=>setUpdatedata({ "category": event.target.value})}
                         // variant="filled"
                         type="text"
                     />
@@ -212,29 +169,21 @@ export const Update = () => {
                         value={updatedata.content}
                         style={{ width:"90%" }}
                         onChange={handleChange}
-                        // onChange={(event)=>setUpdatedata(updatedata.content = event.target.value)}
                         variant="filled"
                         type="text"
                     />
 
-                       
-
-
-
-
-
-
-
-                       
-
                 </div>
                 <div>
                 <Button variant="contained" color="primary"   onClick={handleMenuUpdate}>
-                        UPDATE
+                    UPDATE
                 </Button>
-                        <Button variant="contained" color="secondary" style={{marginLeft:"25px" }}>
-                        DELETE
-                        </Button>
+                <Button variant="contained"   onClick={()=> history.push("/")} style={{marginLeft:"25px" }}>
+                    cancel
+                </Button>
+                <Button variant="contained" color="secondary" style={{marginLeft:"25px" }}>
+                    DELETE
+                </Button>
                 
                 </div>
             </form>
@@ -245,18 +194,3 @@ export const Update = () => {
 }
 
 export default Update;
-
-
-// const handleChange = (prop) => (event) => {
-//     setUpdatedata(
-//         { 
-//             ...title, [prop.category]: event.target.value, 
-//             ...title, [prop.content]: event.target.value, 
-//             ...title, [prop.image]: event.target.value, 
-//             ...title, [prop.title]: event.target.value 
-        
-//         }
-//     );
-// };
-
-
