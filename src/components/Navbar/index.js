@@ -91,6 +91,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PrimarySearchAppBar() {
+
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -213,11 +214,11 @@ export default function PrimarySearchAppBar() {
 		  </Typography>
 
           <div className={classes.sectionDesktop}>
-            <Button href="http://localhost:3000/" color="inherit">
+            <Button onClick={()=> history.push("/")} color="inherit">
 				Post List 
-				{/* <Link to="/">Post List </Link> */}
+				
             </Button>
-            <Button href="#text-buttons" color="inherit">
+            <Button onClick={()=> history.push("/create/")} color="inherit">
                 Post Create
             </Button>
 		  </div>
