@@ -76,19 +76,20 @@ const Create = () => {
     const history = useHistory();
     const classes = useStyles();
     const [currency, setCurrency] = React.useState('E');
-    const [content, setContent] = React.useState('P');
+    const [currency3, setCurrency3] = React.useState('P');
+    
     const handleChange2 = (event) => {
         setCurrency(event.target.value);
       };
     const handleChange3 = (event) => {
-        setContent(event.target.value);
+        setCurrency3(event.target.value);
       };
     const [createdata, setCreatedata] = useState(
         {   
             "title" :"",
             "image" :"",
-            "category" :"",
-            "status" :"",
+            // "category" :"",
+            // "status" :"",
             "content" :""
             
         }
@@ -103,6 +104,39 @@ const Create = () => {
 
     console.log("createdata :",createdata) ;
 
+    const handleCreate = () => {
+            
+        
+        const requestOptions = {
+            method: 'POST',
+            headers : {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization : "Token "+localStorage.getItem('Authorization'),
+        
+            },
+            body: JSON.stringify(
+                {   "blogger": "1",
+                    "title" : createdata.title,
+                    "image" : createdata.image,
+                    "category" : currency.category,
+                    "status" : currency3.status,
+                    "content" : createdata.content
+                })
+        };
+        fetch( ("https://blog6666.herokuapp.com/create/"), requestOptions)
+            .then(response => response.json())
+            // .then(data => console.log("response_data:",data))
+            .then(res =>history.push("/detail/"+res.slug) );
+            
+            // alert.show('Oh look, an alert!')
+            // document.location.reload()
+    
+    // empty dependency array means this effect will only run once (like componentDidMount in classes)
+    
+
+    
+  };
 
 
 
@@ -156,7 +190,7 @@ const Create = () => {
                         label="Category"
                         name="category"
                         value={currency}
-                        onChange={handleChange2,handleChange}
+                        onChange={handleChange2}
                         helperText="Please select your category"
                         >
                         {currencies.map((option) => (
@@ -168,11 +202,11 @@ const Create = () => {
                     <TextField
                         id="standard-select-currency"
                         select
-                        label="Content"
-                        name="content"
-                        value={content}
-                        onChange={handleChange3,handleChange}
-                        helperText="Please select your content"
+                        label="Status"
+                        name="status"
+                        value={currency3}
+                        onChange={handleChange3}
+                        helperText="Please select your status"
                         >
                         {currencies2.map((option) => (
                             <MenuItem key={option.value} value={option.value}>
@@ -195,7 +229,7 @@ const Create = () => {
 
                 </div>
                 <div>
-                <Button variant="contained" color="primary"   >
+                <Button variant="contained" color="primary"  onClick={handleCreate} >
                     Save Post
                 </Button>
                 <Button variant="contained"   onClick={()=> history.push("/")} style={{marginLeft:"25px" }}>
