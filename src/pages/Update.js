@@ -35,6 +35,7 @@ export const Update = () => {
     const { slug } = useParams();
     const classes = useStyles();
     const postUpdateBaseUrl = "https://blog6666.herokuapp.com/update/"
+    const postDeleteBaseUrl = "https://blog6666.herokuapp.com/delete/"
     const DetailUrl = "/detail/"+slug;
     const history = useHistory();
 
@@ -80,7 +81,22 @@ export const Update = () => {
              
     }, []) 
 
+    
+    const handleMenuDelete = () => {
+        axios.delete((postDeleteBaseUrl+slug+"/"), {
+            headers : {
+             Accept: "application/json",
+             "Content-Type": "application/json",
+             Authorization : "Token "+localStorage.getItem('Authorization'),
      
+            }
+        })
+        .then( (res)=>console.log("Delete_data:", res) )
+        window.alert("Your Post Deleted")
+        history.push("/")
+        
+
+    };
     
 
     const handleMenuUpdate = () => {
@@ -105,6 +121,7 @@ export const Update = () => {
             fetch( (postUpdateBaseUrl+slug+"/"), requestOptions)
                 .then(response => response.json())
                 .then(data => console.log("response_data:",data));
+                window.alert("Your Post Updated")
                 history.push(DetailUrl)
                 // alert.show('Oh look, an alert!')
                 // document.location.reload()
@@ -181,8 +198,18 @@ export const Update = () => {
                 <Button variant="contained"   onClick={()=> history.push("/")} style={{marginLeft:"25px" }}>
                     cancel
                 </Button>
-                <Button variant="contained" color="secondary" style={{marginLeft:"25px" }}>
+                {/* <Button variant="contained" color="secondary"  onClick={handleMenuDelete} style={{marginLeft:"25px" }}>
                     DELETE
+                </Button>
+ */}
+
+                <Button
+                 variant="contained"
+                 color="secondary" 
+                 onClick={e =>window.confirm("Are you sure you wish to delete this item?") && handleMenuDelete(e)} 
+                 style={{marginLeft:"25px" }}
+                >
+                DELETE2
                 </Button>
                 
                 </div>

@@ -116,8 +116,7 @@ const Create = () => {
         
             },
             body: JSON.stringify(
-                {   "blogger": "1",
-                    "title" : createdata.title,
+                {   "title" : createdata.title,
                     "image" : createdata.image,
                     "category" : currency.category,
                     "status" : currency3.status,
