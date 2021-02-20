@@ -18,6 +18,8 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import SpaIcon from '@material-ui/icons/Spa';
 import Button from '@material-ui/core/Button';
+import FingerprintIcon from '@material-ui/icons/Fingerprint';
+import CreateIcon from '@material-ui/icons/Create';
 // import {Link } from "react-router-dom";
 import {history} from "react-router-dom"
 
@@ -100,9 +102,13 @@ export default function PrimarySearchAppBar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+  const x = localStorage.getItem('Authorization')? "visible"  :"none";
+  const y = localStorage.getItem('Authorization')? "none"  :"visible";
+
   const handleProfileMenuOpen = (event) => {
 	setAnchorEl(event.currentTarget);
   };
+  
 
   const handleMobileMenuClose = () => {
 	setMobileMoreAnchorEl(null);
@@ -124,6 +130,7 @@ export default function PrimarySearchAppBar() {
     axios.post(`https://blog6666.herokuapp.com/auth/logout/`)
       .then(response => {
 		localStorage.setItem("Authorization", "");
+		localStorage.setItem("Localusername", "");
 		// localStorage.removeItem()
         console.log("Logout_message:",response )
         history.push("/")
@@ -146,7 +153,7 @@ export default function PrimarySearchAppBar() {
 	  keepMounted
 	  transformOrigin={{ vertical: 'top', horizontal: 'right' }}
 	  open={isMenuOpen}
-	//   onClose={handleMenuClose}
+	  onClose={handleMenuClose}
 	>
 	  <MenuItem onClick={handleMenuProfile}>Profile</MenuItem>
 	  <MenuItem onClick={handleMenuClose}>My account</MenuItem>
@@ -173,15 +180,27 @@ export default function PrimarySearchAppBar() {
 		</IconButton>
 		<p>Messages</p>
 	  </MenuItem>
-	  <MenuItem>
-		<IconButton aria-label="show 11 new notifications" color="inherit">
-		  <Badge badgeContent={11} color="secondary">
-			<NotificationsIcon />
-		  </Badge>
+	  <MenuItem onClick={()=> history.push("/auth/login")} style = {{display: y }}>
+		<IconButton color="inherit"  >
+
+			<FingerprintIcon />
+			
+			
 		</IconButton>
-		<p>Notifications</p>
+		<p href="http://localhost:3000/auth/login">SignIn</p>
 	  </MenuItem>
-	  <MenuItem onClick={handleProfileMenuOpen}>
+	  <MenuItem onClick={()=> history.push("/create/")} style = {{display: x }}>
+	  
+		<IconButton color="inherit"   >
+		
+			<CreateIcon />
+			
+			
+		</IconButton>
+		<p >CreatePost</p>
+		
+	  </MenuItem>
+	  <MenuItem onClick={handleProfileMenuOpen} style = {{display: x }}>
 		<IconButton
 		  aria-label="account of current user"
 		  aria-controls="primary-search-account-menu"
@@ -194,7 +213,7 @@ export default function PrimarySearchAppBar() {
 	  </MenuItem>
 	</Menu>
   );
-  const x = localStorage.getItem('Authorization')? "visible"  :"none";
+ 
   
   return (
 	<div className={classes.grow}>
@@ -213,15 +232,7 @@ export default function PrimarySearchAppBar() {
 			BLOG
 		  </Typography>
 
-          <div className={classes.sectionDesktop}>
-            <Button onClick={()=> history.push("/")} color="inherit">
-				Post List 
-				
-            </Button>
-            <Button onClick={()=> history.push("/create/")} color="inherit">
-                Post Create
-            </Button>
-		  </div>
+          
 
 		  <div className={classes.search}>
 			<div className={classes.searchIcon}>
@@ -237,29 +248,32 @@ export default function PrimarySearchAppBar() {
 			/>
 		  </div>
 		  <div className={classes.grow} />
-		  
 		  <div className={classes.sectionDesktop}>
-            <Button href="http://localhost:3000/auth/login" color="inherit" >
-                Sign In
+            <Button onClick={()=> history.push("/")} color="inherit">
+				Post List 
+				
             </Button>
-            <Button href="#text-buttons" color="inherit">
-                Sign Up
+            <Button onClick={()=> history.push("/create/")} color="inherit" style = {{display: x }}>
+                Post Create
             </Button>
 		  </div>
-
-		  
+		 		  
 		  <div className={classes.sectionDesktop}>
 		  
-			<IconButton aria-label="show 4 new mails" color="inherit">
+			<IconButton aria-label="show 4 new mails" color="inherit" style = {{display: x }} >
 			  <Badge badgeContent={4} color="secondary">
 				<MailIcon />
 			  </Badge>
 			</IconButton>
-			<IconButton aria-label="show 17 new notifications" color="inherit">
-			  <Badge badgeContent={17} color="secondary">
-				<NotificationsIcon />
-			  </Badge>
+			<IconButton 
+				aria-label="show 17 new notifications" 
+				color="inherit" 
+				href="http://localhost:3000/auth/login"
+				style = {{display: y }}
+			>
+				<FingerprintIcon />Sign In
 			</IconButton>
+
 			<IconButton
 			  edge="end"
 			  aria-label="account of current user"
@@ -270,7 +284,7 @@ export default function PrimarySearchAppBar() {
 			  className={classes.userAvatar}
 			  style = {{display: x }}
 			>
-			  <AccountCircle />
+			  <AccountCircle />{localStorage.getItem("Localusername")}
 			</IconButton>
 		  </div>
 		  <div className={classes.sectionMobile}>
@@ -281,6 +295,7 @@ export default function PrimarySearchAppBar() {
 			  onClick={handleMobileMenuOpen}
 			  color="inherit"
 			>
+			  {localStorage.getItem("Localusername")}
 			  <MoreIcon />
 			</IconButton>
 		  </div>

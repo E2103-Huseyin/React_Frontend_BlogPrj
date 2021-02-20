@@ -73,8 +73,8 @@ export default function InputWithIcon() {
         localStorage.setItem("Localusername", username);
         console.log("response:", response);
          
-        // history.push("/")
-        // document.location.reload()
+        history.push("/")
+        document.location.reload()
         
     }).catch(({response:{data}}) => setErr({data}))
     // catch(({response:{data}}) => setErr({data}))
