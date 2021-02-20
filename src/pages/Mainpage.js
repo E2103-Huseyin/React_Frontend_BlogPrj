@@ -8,8 +8,7 @@ const Mainpage = () => {
         <div>
                     
             <h1>hello</h1>
-            hello word
-            <Button color="primary">Hello World</Button>;
+           
             <Cardlist/>
         </div>
     )

@@ -1,4 +1,5 @@
 import React, {useEffect,useState} from 'react';
+import Comment from "../components/Comment/comment"
 import axios from "axios";
 import {useHistory} from "react-router-dom"
 import { useParams } from "react-router-dom"
@@ -48,21 +49,33 @@ const Detail = () => {
    
     return (
         
-        <div>
+        <>
+            <div>
+              <h1>detail page</h1>
+              <h5>{blogDetail.title}</h5>
+              <p>{blogDetail.content}</p>
+
+
+              <Button variant="outlined" onClick={handleMenuUpdate}>Update</Button>
+              <Button variant="outlined" color="primary">
+                  Primary
+              </Button>
+              <Button variant="outlined" color="secondary">
+                  Secondary
+              </Button>
+            </div>
+            <div>
+
+              {blogDetail.comment_text?.map(data =>{
+                return <Comment  props={data} /> 
+                
+              })}
+
+            </div>
             
-            <h1>detail page</h1>
-            <h5>{blogDetail.title}</h5>
-            <p>{blogDetail.content}</p>
+            
 
-            <Button variant="outlined" onClick={handleMenuUpdate}>Update</Button>
-            <Button variant="outlined" color="primary">
-                Primary
-            </Button>
-            <Button variant="outlined" color="secondary">
-                Secondary
-            </Button>
-
-        </div>
+        </>
     )
 }
 

@@ -16,7 +16,7 @@ const MyRouter = () => {
         <>
             <BrowserRouter >
             <PrimarySearchAppBar/>
-            <SuccessAlerts/>
+            {/* <SuccessAlerts/> */}
             <Switch>
                 <Route path="/detail/:slug" component={Detail} exect/>
                 <Route path="/update/:slug" component={Update} exect/>
