@@ -43,6 +43,7 @@ const Detail = () => {
     const classes = useStyles();
     const history = useHistory();
     const [comment, setComment] = useState('');
+    const [visible, setVisible] = useState('');
     console.log("comment:", comment)
     const postCommentBaseUrl = "https://blog6666.herokuapp.com/comment/"
     const usertoken ="Token "+localStorage.getItem('Authorization');
@@ -96,6 +97,12 @@ const Detail = () => {
       // useEffect()
 
     };
+    
+    const myblog_owner = (blogDetail.blogger == localStorage.getItem("Localusername"))? "visible"  :"hidden";
+    console.log("blog_owner:", myblog_owner)
+    
+    
+
    
     return (
         
@@ -105,14 +112,18 @@ const Detail = () => {
               <h5>{blogDetail.title}</h5>
               <p>{blogDetail.content}</p>
 
+              
+              <Button 
+                variant="outlined" 
+                onClick={handleMenuUpdate} 
+                style = {{visibility: myblog_owner }}
+              >
+                Update
+              </Button>
 
-              <Button variant="outlined" onClick={handleMenuUpdate}>Update</Button>
-              <Button variant="outlined" color="primary">
-                  Primary
-              </Button>
-              <Button variant="outlined" color="secondary">
-                  Secondary
-              </Button>
+              
+              
+              
             </div>
             <div className={classes.root}>
       
