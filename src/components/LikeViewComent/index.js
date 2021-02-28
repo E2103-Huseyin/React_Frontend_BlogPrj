@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   root5: {
     color:"white",
-    backgroundColor:"rgba(0,0,0,0.7)",
+    // backgroundColor:"rgba(0,0,0,0.7)",
     padding:"8px"
   },
   

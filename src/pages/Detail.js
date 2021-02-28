@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     border: "2px solid black",
     borderRadius: "8px",
     padding: "15px",
-    backgroundColor: "#de8"
+    backgroundColor: "#ffecb3"
 
 
   },
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     border: "2px solid black",
     borderRadius: "8px",
     padding: "15px",
-    backgroundColor: "#8ef"
+    // backgroundColor: "#000"
 
 
   },
@@ -51,14 +51,15 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     width: '25ch',
+    
   },
   root6: {
-    // color:"white",
+    
      display: 'flex',
      width: '50%',
     // flexWrap: 'wrap',
     justifyContent: 'space-around',
-    // backgroundColor:"rgba(25,100,178,0.7)",
+    backgroundColor:"rgba(255,255,255,0.4)",
     padding:"8px"
   },
 
@@ -165,8 +166,8 @@ const Detail = () => {
               
               <ImageBar props={blogDetail}/>
               
-              <div>
-                <h5>{blogDetail.title}-({blogDetail.update_time})</h5>
+              <div style={{color:"black"}}>
+                <h5>{blogDetail.title}-(Author:{blogDetail.blogger} {blogDetail.update_time})</h5>
                 <p>{blogDetail.content}</p>
               </div>
               <div className={classes.root6} >

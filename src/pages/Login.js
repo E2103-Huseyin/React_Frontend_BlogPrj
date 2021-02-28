@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grid from '../components/Auth/Grid';
 import Button from '@material-ui/core/Button';
+import {useHistory} from "react-router-dom"
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -19,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 const postLoginBaseUrl = "https://blog6666.herokuapp.com/auth/login/"
 
 const Login = () => {
+    const history = useHistory();
     const classes = useStyles();
     // useEffect(() => {
     //     axios.post(postLoginBaseUrl)?.then((res)=>console.log("Login:",res))
@@ -51,7 +54,7 @@ const Login = () => {
                             }}>
                             <h1 style={{ color: 'red' }}>Henüz Üye Değil Misiniz?</h1>
                             <p style={{ color: 'white' }}>Üyelerimize özel hizmetlerimizden faydalanabilmek için üye olun.</p>
-                            <Button variant="outlined" color="primary" href="#outlined-buttons">
+                            <Button variant="outlined" color="primary" href="#outlined-buttons" onClick={()=> history.push(`/register`)}>
                                 Hemen Üye Ol
                             </Button>
                             </div>
