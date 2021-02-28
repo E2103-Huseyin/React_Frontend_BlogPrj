@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-
+import axios from 'axios';
 import {useHistory} from "react-router-dom"
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -111,38 +111,64 @@ function Signup() {
         weight: '',
         weightRange: '',
         showPassword: false,
-      });
+    });
+    const [values2, setValues2] = React.useState({
+        amount: '',
+        password: '',
+        weight: '',
+        weightRange: '',
+        showPassword: false,
+    });
       
-      const handleChange = (prop) => (event) => {
+    const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
-      };
+    };
+    const handleChange2 = (prop) => (event) => {
+        setValues2({ ...values2, [prop]: event.target.value });
+    };
       
     
     
-      const handleClickShowPassword = () => {
+    const handleClickShowPassword = () => {
         setValues({ ...values, showPassword: !values.showPassword });
-      };
+    };
+    const handleClickShowPassword2 = () => {
+        setValues2({ ...values2, showPassword: !values2.showPassword });
+    };
     
-      const handleMouseDownPassword = (event) => {
+    const handleMouseDownPassword = (event) => {
         event.preventDefault();
-      };
+    };
+    const handleMouseDownPassword2 = (event) => {
+        event.preventDefault();
+    };
     
-      const [username, setUsername] = useState("")
-      const [email, setEmail] = useState("")
-      const [err, setErr] = useState()
-    //   const handleChange =(res) =>{
-    //     setUsername(res)
-    //   }
+    const [username, setUsername] = useState("")
+    const [email, setEmail] = useState("")
+    const [err, setErr] = useState()
+    
     
       console.log("username:", username);
       console.log("email:", email);
       console.log("err:", err);
       
-      const password = values.password
+      const password = values.password;
+      const password2 = values2.password;
       
-      console.log("localusername:", localStorage.getItem('Localusername'));
-      console.log("Authorization:", localStorage.getItem('Authorization'));
-    
+      
+      const handleSubmit = async () => {
+        axios.post(`https://blog6666.herokuapp.com/user/register/`, { username ,email, password, password2  })
+          .then(response => {
+            // localStorage.setItem("Authorization", response.data.key);
+            localStorage.setItem("Localusername", username);
+            console.log("response:", response);
+             
+            history.push("/auth/login/")
+            // document.location.reload()
+            
+        }).catch(({response:{data}}) => setErr({data}))
+        // catch(({response:{data}}) => setErr({data}))
+        }
     
 
     return (
@@ -213,12 +239,41 @@ function Signup() {
                     
                     </FormControl>
                     </div>
+                    <div className={classes.root4}>
+                    <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
+                        <InputLabel htmlFor="outlined-adornment-password" style={{color:"white"}} >Password Again</InputLabel>
+                        <OutlinedInput
+                            // OutlinedInput
+                            id="outlined-adornment-password"
+                            type={values2.showPassword ? 'text' : 'password'}
+                            value={values2.password}
+                            onChange={handleChange2('password')}
+                            
+                            
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword2}
+                                    onMouseDown={handleMouseDownPassword2}
+                                    edge="end"
+                                    >
+                                    {values2.showPassword ? <Visibility /> : <VisibilityOff />}
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                            labelWidth={70}
+                        />
+
+                    
+                    </FormControl>
+                    </div>
                     <Button
                         variant="contained"
                         color="primary"
                         className={classes.button}
                         style={{marginTop:"20px",marginLeft:"20px"}}
-                        // onClick={handleSubmit}
+                        onClick={handleSubmit}
                     >
                         Sign Up <LockOpenIcon/>
                     </Button>
